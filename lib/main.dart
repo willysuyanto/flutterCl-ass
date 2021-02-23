@@ -27,6 +27,23 @@ class HalamanAwal extends StatefulWidget {
 
 class HalamanAwalState extends State<HalamanAwal> {
 
+  int _index = 0;
+  List<String> daftarHalaman = ["Halaman Home","Halaman Profil","Halaman Setting","Halaman Search"];
+
+  setIndex(index){
+    setState(() {
+      _index = index;
+    });
+  }
+
+  Widget isiHalaman() {
+    if(_index == 0){
+      return Center(child: Text(daftarHalaman.elementAt(_index)));
+    } else {
+     return Text('ini tidak di tengah');
+    }
+  }
+
   List<Widget> _loop() {
     List<Widget> list = [
     ];
@@ -36,7 +53,15 @@ class HalamanAwalState extends State<HalamanAwal> {
       list.add(
       Container(
         height: 150,
-        child: Text('Text-$i'),
+        width: 20,
+        child: Card(
+          elevation: 10,
+          child: Column(
+            children: [
+              Text('Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text '),
+            ],
+          )
+        ),
       )
     );
     }
@@ -47,7 +72,7 @@ class HalamanAwalState extends State<HalamanAwal> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Halaman Awal"),
+        title: Text(daftarHalaman.elementAt(_index)),
         actions: [
           IconButton(
             icon: Icon(Icons.home),
@@ -55,18 +80,34 @@ class HalamanAwalState extends State<HalamanAwal> {
           ),
         ],
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Colors.green,
+        unselectedItemColor: Colors.black,
+        currentIndex: _index,
+        onTap: setIndex,
+        items: [
+          BottomNavigationBarItem(
+            label: "Home",
+            icon: Icon(Icons.home),
+          ),
+          BottomNavigationBarItem(
+            label: "Profil",
+            icon: Icon(Icons.verified_user),
+          ),
+          BottomNavigationBarItem(
+            label: "Setting",
+            icon: Icon(Icons.settings),
+          ),
+          BottomNavigationBarItem(
+            label: "Search",
+            icon: Icon(Icons.search),
+          ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.home_rounded),
       ),
-      body: Container(
-        padding: EdgeInsets.all(16.0),
-        color: Colors.grey,
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        child: ListView(
-          children: _loop()
-        )
-      ),
+      body: isiHalaman()
     );
   }
 }
